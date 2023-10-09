@@ -1,0 +1,80 @@
+.galaxy-container {
+    width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.battlefield-container {
+    min-height: 800px;
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.battle-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    min-height: 650px;
+    max-height: 700px;
+
+    force-card {
+        display: block;
+        max-width: 400px;
+        margin-bottom: 15px;
+    }
+}
+
+.battle-resolver {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 124px;
+    z-index: 9;
+    color: black;
+    text-shadow: 1px 1px 3px yellow;
+}
+
+.battle-preparing {
+    position: absolute;
+    margin-top: -75px;
+}
+
+.battle-versus {
+    font-size: 50px;
+    margin: 0 20px;
+
+    &.hide {
+        visibility: hidden;
+    }
+}
+
+.players {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 15px;
+    font-size: 28px;
+    font-family: 'Starjedi';
+    width: 100%;
+}
+
+.start-battle-button {
+    padding: 28px 64px;
+    font-size: 20px;
+    font-family: 'Starjedi';
+    margin-bottom: 14px;
+
+    &.mat-mdc-raised-button:not(:disabled) {
+        background: yellow;
+        color: #000;
+    }
+}

@@ -1,0 +1,28 @@
+<mat-card class="force-card" *ngIf="resource else unknown">
+    <div class="card-win" *ngIf="winner">Winner</div>
+    <mat-card-header>
+      <mat-card-title>{{ resource.name }}</mat-card-title>
+    </mat-card-header>
+    <div mat-card-image [style.backgroundImage]="'url(' + resource.image + ')'"></div>
+    <mat-card-content>
+    <ng-container *ngIf="isBattleResolved">
+      <ng-container *ngIf="peopleDetails as people">
+        Mass: {{ people.mass }}
+      </ng-container>
+      <ng-container *ngIf="starshipDetails as ship">
+        Crew: {{ ship.crew}}
+      </ng-container>
+    </ng-container>
+    </mat-card-content>
+  </mat-card>
+  
+  <ng-template #unknown>
+    <div class="unknown">
+        <ng-container *ngIf="state === BattleState.PREPARING">
+           <mat-spinner class="force-spinner"></mat-spinner>
+        </ng-container>
+        <ng-container *ngIf="state === BattleState.PEACE">
+            ?
+        </ng-container>
+    </div>
+  </ng-template>

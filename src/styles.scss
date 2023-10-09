@@ -1,1 +1,10 @@
+@import "../node_modules/@angular/material/prebuilt-themes/purple-green.css";
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: Starjedi;
+    src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/718469/Starjedi.ttf);
+    font-weight: normal;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Starjedi', Roboto, "Helvetica Neue", sans-serif !important; background: #000; color: #fff}

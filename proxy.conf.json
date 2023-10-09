@@ -1,0 +1,8 @@
+{
+    "/starwars/images/": {
+        "target": "https://static.wikia.nocookie.net",
+        "secure": true,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    }
+}
