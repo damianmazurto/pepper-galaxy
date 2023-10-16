@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Battle, BattleService, BattleState, InitState, ResourceType } from './services/battle.service';
-import { BehaviorSubject, Observable, asyncScheduler, concatMap, delay, endWith, finalize, from, observeOn, of, startWith, tap } from 'rxjs';
+import { BattleService } from './services/battle.service';
+import { BehaviorSubject, Observable, concatMap, delay, endWith, finalize, from, of, startWith } from 'rxjs';
+import { Battle, BattleState, InitState } from './models/battle.model';
+import { ResourceType } from './models/resource.models';
 
 interface Player {
   name: string;

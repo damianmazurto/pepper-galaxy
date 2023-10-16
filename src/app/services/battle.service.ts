@@ -2,89 +2,12 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, concat, delay, forkJoin, map, mapTo, merge, mergeMap, of, reduce, retry, startWith, tap } from "rxjs";
 import { FandomService } from "./fandom.service";
+import { ResourceBattleData, ResourceDetails, ResourceDetailsResponse, ResourceResponse, ResourceType } from "../models/resource.models";
+import { PeopleDetails } from "../models/people.model";
+import { StarshipDetails } from "../models/starships.model";
+import { Battle, BattleState, InitState } from "../models/battle.model";
 
 const api = `https://www.swapi.tech/api`;
-
-interface ResourceResult {
-    uid: string,
-    name: string,
-    url: string;
-}
-
-interface ResourceResponse {
-    message: string,
-    total_records: number,
-    total_pages: number,
-    results: ResourceResult[];
-}
-
-interface ResourceDetailsResponse {
-    message: string,
-    result: {
-      properties: ResourceDetails
-    }
-}
-
-export interface PeopleDetails {
-    height: number,
-    mass: string | 'unknown',
-    hair_color: string,
-    skin_color: string,
-    eye_color: string,
-    birth_year: string,
-    gender: string,
-    name: string,
-    homeworld: string,
-    url: string,
-    image?: string; 
-}
-
-export interface StarshipDetails {
-    model: string,
-    starship_class: string,
-    manufacturer: string
-    cost_in_credits: number,
-    length: number,
-    crew: number | 'unknown',
-    passengers: number,
-    max_atmosphering_speed: number,
-    hyperdrive_rating: number,
-    MGLT: number,
-    cargo_capacity: number,
-    consumables: string,
-    pilots: [],
-    name: string,
-    image?: string; 
-    url: string
-}
-
-export enum BattleState {
-    FIRST = 'first',
-    SECOND = 'second',
-    DRAFT = 'draft',
-    FIGHT = 'fight',
-    PREPARING = 'preparing',
-    PEACE = 'peace'
-}
-
-export enum InitState {
-    LOADING = 'loading',
-    LOADED = 'loaded',
-    ERROR = 'error',
-}
-
-export interface Battle {
-    firstResource: ResourceDetails | null,
-    secondResource: ResourceDetails | null,
-    state: BattleState;
-}
-export type ResourceDetails = PeopleDetails | StarshipDetails;
-
-export type ResourceType = 'people' | 'starships';
-
-type ResourceBattleData = {
-    [key in ResourceType]: ResourceResult[];
-};
 
 @Injectable({
     providedIn: 'root'
@@ -150,7 +73,7 @@ export class BattleService {
             delay(300),
             mergeMap((resource) => forkJoin({
                 resource: of(resource),
-                resourceImage: this.fandomService.fetchWikiaImage(resource.name),
+                resourceImage: this.fandomService.fetchWikiaImage(resource.name || ''),
             })),
             reduce((acc: ResourceDetails[], curr) => {
                 return [...acc, {...curr.resource, image: curr.resourceImage}]
@@ -202,8 +125,8 @@ export class BattleService {
     }
 
     private calcBattleFromPeople(firstResource: PeopleDetails, secondResource: PeopleDetails): BattleState  {
-        const firstMass = firstResource.mass === 'unknown' ? 0 : parseInt(firstResource.mass);
-        const secondMass = secondResource.mass === 'unknown' ? 0 : parseInt(secondResource.mass);
+        const firstMass = firstResource.mass === 'unknown' ? 0 : parseFloat(firstResource.mass);
+        const secondMass = secondResource.mass === 'unknown' ? 0 : parseFloat(secondResource.mass);
 
         if (firstMass === secondMass) return BattleState.DRAFT;
        
@@ -211,8 +134,8 @@ export class BattleService {
     }
 
     private calcBattleFromStarships(firstResource: StarshipDetails, secondResource: StarshipDetails): BattleState  {
-        const firstCrew = firstResource.crew === 'unknown' ? 0 : firstResource.crew;
-        const secondCrew = secondResource.crew === 'unknown' ? 0 : secondResource.crew;
+        const firstCrew = firstResource.crew === 'unknown' ? 0 : parseFloat(firstResource.crew);
+        const secondCrew = secondResource.crew === 'unknown' ? 0 : parseFloat(secondResource.crew);
 
         if (firstCrew === secondCrew) return BattleState.DRAFT;
        

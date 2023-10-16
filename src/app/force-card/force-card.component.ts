@@ -1,5 +1,9 @@
 import { Component, Input } from "@angular/core";
-import { BattleService, BattleState, PeopleDetails, ResourceDetails, StarshipDetails } from "../services/battle.service";
+import { BattleService } from "../services/battle.service";
+import { ResourceDetails } from "../models/resource.models";
+import { BattleState } from "../models/battle.model";
+import { PeopleDetails } from "../models/people.model";
+import { StarshipDetails } from "../models/starships.model";
 
 @Component({
     selector: 'force-card',
@@ -13,7 +17,7 @@ export class ForceCardComponent {
     @Input() state!: BattleState;
 
     BattleState = BattleState;
-    
+
     constructor(private battleService: BattleService) {
 
     }

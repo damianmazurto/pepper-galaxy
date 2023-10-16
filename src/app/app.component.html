@@ -19,12 +19,14 @@
           </ng-container>
         </div>
         <force-card 
+          id="player1"
           [winner]="battle.state === BattleState.FIRST" 
           [state]="battle.state" 
           [resource]="battle.firstResource"
         ></force-card>
         <div class="battle-versus" [class.hide]="battle.state == BattleState.FIGHT">vs</div>
         <force-card 
+          id="player2"
           [winner]="battle.state === BattleState.SECOND" 
           [state]="battle.state" 
           [resource]="battle.secondResource"
